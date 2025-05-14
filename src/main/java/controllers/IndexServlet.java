@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import models.Task;
 import utils.DBUtil;
@@ -17,7 +17,7 @@ import utils.DBUtil;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet("/index")
+@WebServlet({"/index", "/"})
 public class IndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,6 @@ public class IndexServlet extends HttpServlet {
      */
     public IndexServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -40,8 +39,22 @@ public class IndexServlet extends HttpServlet {
 
         em.close();
 
+        // ★★★ この行を追加 ★★★
+        System.out.println("DEBUG: IndexServlet - 取得したタスク数: " + tasks.size());
+
         request.setAttribute("tasks", tasks);
 
+        // ★★★ この部分を追加 ★★★
+        System.out.println("DEBUG: IndexServlet - タスクリストの内容:");
+        if (tasks != null && !tasks.isEmpty()) {
+            for (Task task : tasks) {
+            System.out.println("  ID: " + task.getId() + ", Content: " + task.getContent());
+            }
+        } else {
+        System.out.println("  タスクリストは空または null です。");
+        }
+        // ★★★ 追加ここまで ★★★
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");
         rd.forward(request, response);
     }
