@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <h2>タスク新規作成ページ</h2>
 
 <form method="POST" action="${pageContext.request.contextPath}/create">
-    <jsp:include page="/test.jsp" /> 
     <jsp:include page="/_form.jsp" /> 
 </form>
 
